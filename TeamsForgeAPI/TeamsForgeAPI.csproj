@@ -22,4 +22,15 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Domain\Enums\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Infrastructure\Data\" />
+    <Folder Include="Infrastructure\Extensions\" />
+    <Folder Include="Infrastructure\Options\" />
+    <Folder Include="Infrastructure\Services\" />
+  </ItemGroup>
+
 </Project>
