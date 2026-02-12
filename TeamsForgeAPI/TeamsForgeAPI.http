@@ -1,0 +1,6 @@
+@TeamsForgeAPI_HostAddress = http://localhost:5002
+
+GET {{TeamsForgeAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
