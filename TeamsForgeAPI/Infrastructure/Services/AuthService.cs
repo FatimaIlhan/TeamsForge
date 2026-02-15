@@ -13,14 +13,14 @@ public class AuthService: IAuthService
 
     private readonly AppDbContext _ctx;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly JwtTokenService _jwtTokenService;
 
     public AuthService(
         AppDbContext ctx,
         UserManager<ApplicationUser> userManager,
-        RoleManager<IdentityRole> roleManager,
+        RoleManager<ApplicationRole> roleManager,
         SignInManager<ApplicationUser> signInManager,
         JwtTokenService jwtTokenService)
     {
@@ -31,7 +31,7 @@ public class AuthService: IAuthService
         _jwtTokenService = jwtTokenService;
     }
 
-    public async Task<AuthenticationResult> RegisterAsync(RegisterDto dto)
+    public async Task<AuthenticationResultDto> RegisterAsync(RegisterDto dto)
     {
         var identity = new ApplicationUser
          { 
@@ -57,19 +57,19 @@ public class AuthService: IAuthService
        
         var claimsIdentity = new ClaimsIdentity(new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, identity.Id),
+            new Claim(JwtRegisteredClaimNames.Sub, identity.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, identity.Email ?? string.Empty),
-            new Claim(ClaimTypes.NameIdentifier, identity.Id)
+            new Claim(ClaimTypes.NameIdentifier, identity.Id.ToString())
         });
         claimsIdentity.AddClaims(newClaims);
 
         var token = _jwtTokenService.CreateSecurityToken(claimsIdentity);
         var jwtToken = _jwtTokenService.WriteToken(token);
 
-        return new AuthenticationResult(jwtToken, identity.Id);
+        return new AuthenticationResultDto(jwtToken, identity.Id.ToString());
     }
 
-    public async Task<AuthenticationResult> LoginAsync(LoginDto dto)
+    public async Task<AuthenticationResultDto> LoginAsync(LoginDto dto)
     {
         var user = await _userManager.FindByEmailAsync(dto.Email);
         if (user == null)
@@ -84,9 +84,9 @@ public class AuthService: IAuthService
 
         var claimsIdentity = new ClaimsIdentity(new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
-            new Claim(ClaimTypes.NameIdentifier, user.Id)
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
         });
         claimsIdentity.AddClaims(claims);
         foreach (var role in roles)
@@ -97,7 +97,7 @@ public class AuthService: IAuthService
         var token = _jwtTokenService.CreateSecurityToken(claimsIdentity);
         var jwtToken = _jwtTokenService.WriteToken(token);
 
-        return new AuthenticationResult(jwtToken, user.Id);
+        return new AuthenticationResultDto(jwtToken, user.Id.ToString());
     }
 
 }

@@ -4,5 +4,5 @@ public enum TeamRole
 {
  TeamOwner,
  TeamLead,
- Member
+ TeamMember
 }

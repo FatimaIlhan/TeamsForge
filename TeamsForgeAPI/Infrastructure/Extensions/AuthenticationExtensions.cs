@@ -60,7 +60,7 @@ public static class AuthenticationExtensions
          options.Password.RequireUppercase = false;
          options.Password.RequireNonAlphanumeric = false;
      })
-     .AddRoles<IdentityRole>() // Add role support
+    .AddRoles<ApplicationRole>() // Add role support
      .AddSignInManager() // Add sign-in manager
      .AddEntityFrameworkStores<AppDbContext>(); // Use EF Core for identity storage
 

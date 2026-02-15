@@ -4,10 +4,10 @@ namespace TeamsForgeAPI.Domain.Entities;
 
 public class UserRole
 {
-    public string? UserId { get; set; }
-    public int RoleId { get; set; }
- 
-    public ApplicationUser User { get; set; } = null!;
-  
+    public Guid UserId { get; set; }
+    public Guid RoleId { get; set; }
 
+    // Navigation properties
+    public ApplicationUser User { get; set; } = null!;
+    public ApplicationRole Role { get; set; } = null!;
 }

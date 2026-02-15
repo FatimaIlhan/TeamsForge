@@ -1,3 +1,3 @@
 namespace TeamsForgeAPI.Domain.Dtos;
 
-public record class AuthenticationResult(string Token, string UserId);
+public record class AuthenticationResultDto(string Token, string UserId);

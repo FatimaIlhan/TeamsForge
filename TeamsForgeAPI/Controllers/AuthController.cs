@@ -62,7 +62,7 @@ namespace TeamsForgeAPI.Controllers
         {
             new Claim(ClaimTypes.Name, user.UserName!),
             new Claim(ClaimTypes.Email, user.Email!),
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
            // new Claim(CustomClaimTypes.SystemRole, user.SystemRole.ToString())
         };
@@ -115,7 +115,8 @@ namespace TeamsForgeAPI.Controllers
 
     private async Task SendEmailAsync(string toEmail, string subject, string body)
     {
-        var smtpSettings = _configuration.GetSection("Smtp").Get<SmtpSettings>();
+        var smtpSettings = _configuration.GetSection("Smtp").Get<SmtpSettings>()
+            ?? throw new InvalidOperationException("SMTP settings are missing.");
 
         using var client = new SmtpClient(smtpSettings.Host)
         {

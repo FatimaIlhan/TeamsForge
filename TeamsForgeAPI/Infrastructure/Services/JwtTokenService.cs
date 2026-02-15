@@ -10,18 +10,23 @@ namespace TeamsForgeAPI.Infrastructure.Services;
 
 public class JwtTokenService
 {
-    private readonly JwtSettings? _settings;
+    private readonly JwtSettings _settings;
     private readonly byte[] _key;
+    private readonly string _audience;
 
     public JwtTokenService(IOptions<JwtSettings> jwtOptions)
     {
         // Load JWT settings from configuration
-        _settings = jwtOptions.Value;
-        ArgumentNullException.ThrowIfNull(_settings);
+        _settings = jwtOptions.Value ?? throw new ArgumentNullException(nameof(jwtOptions));
         ArgumentNullException.ThrowIfNull(_settings.SigningKey);
         ArgumentNullException.ThrowIfNull(_settings.Audiences);
-        ArgumentNullException.ThrowIfNull(_settings.Audiences[0]);
+        if (_settings.Audiences.Length == 0)
+        {
+            throw new InvalidOperationException("JwtSettings.Audiences must contain at least one value.");
+        }
         ArgumentNullException.ThrowIfNull(_settings.Issuer);
+
+        _audience = _settings.Audiences[0];
 
         // Generate key from signing key
         _key = Encoding.ASCII.GetBytes(_settings.SigningKey);
@@ -50,7 +55,7 @@ public class JwtTokenService
         {
             Subject = identity,
             Expires = DateTime.Now.AddDays(2), // Token expiration set to 2 days
-            Audience = _settings.Audiences[0],
+            Audience = _audience,
             Issuer = _settings.Issuer,
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(_key),

@@ -26,7 +26,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
       });
   });
   // Identity setup  
-  builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
      .AddEntityFrameworkStores<AppDbContext>()
      .AddDefaultTokenProviders();
      
