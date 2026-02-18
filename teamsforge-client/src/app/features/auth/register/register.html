@@ -1,0 +1,81 @@
+<div class="register-container d-flex justify-content-center align-items-center">
+  <div class="card register-card shadow">
+    <div class="card-body">
+      <h4 class="text-center mb-4 text-white">Create Account</h4>
+
+      @if (errorMessage) {
+        <div class="alert alert-danger" role="alert">
+          {{ errorMessage }}
+        </div>
+      }
+
+      @if (successMessage) {
+        <div class="alert alert-success" role="alert">
+          {{ successMessage }}
+        </div>
+      }
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <div class="row mb-3">
+          <div class="col">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First Name"
+              formControlName="firstName"
+            />
+          </div>
+          <div class="col">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last Name"
+              formControlName="lastName"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email"
+            formControlName="email"
+          />
+        </div>
+
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Display Name"
+            formControlName="displayName"
+          />
+        </div>
+
+        <div class="mb-4">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            formControlName="password"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-info w-100"
+          [disabled]="registerForm.invalid || isLoading"
+        >
+          Register
+        </button>
+      </form>
+
+      <p class="text-center mt-3 small text-white">
+        Already have an account?
+        <a routerLink="/login" class="text-info">Login</a>
+      </p>
+    </div>
+  </div>
+</div>

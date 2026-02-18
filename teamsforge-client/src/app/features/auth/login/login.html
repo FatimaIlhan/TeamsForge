@@ -1,0 +1,52 @@
+<div class="login-container d-flex justify-content-center align-items-center">
+  <div class="card login-card shadow">
+    <div class="card-body">
+      <h4 class="text-center mb-4 text-white">Please Login</h4>
+
+      @if (errorMessage) {
+        <div class="alert alert-danger" role="alert">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email"
+            formControlName="email"
+          />
+        </div>
+
+        <div class="mb-4">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            formControlName="password"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-info w-100"
+          [disabled]="loginForm.invalid || isLoading"
+        >
+          Login
+        </button>
+        <p class="text-center mt-2 small">
+          <a routerLink="/forgot-password" class="text-info">
+            Forgot your password?
+          </a>
+        </p>
+
+      </form>
+
+      <p class="text-center mt-3 small text-white">
+        Don't have an account?
+        <a routerLink="/register" class="text-info">Register</a>
+      </p>
+    </div>
+  </div>
+</div>

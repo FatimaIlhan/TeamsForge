@@ -1,0 +1,25 @@
+.register-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.register-card {
+  width: 400px;
+  background-color: #4f5d73;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.form-control {
+  height: 45px;
+}
+
+.btn-info {
+  background-color: #b6dfe8;
+  border: none;
+  font-weight: 500;
+}
+
+.btn-info:hover {
+  background-color: #9fd3df;
+}
